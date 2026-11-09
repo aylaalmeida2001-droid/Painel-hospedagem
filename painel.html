@@ -25,9 +25,29 @@ function qrUrl(slug,size=1200){return 'https://api.qrserver.com/v1/create-qr-cod
 function printPlaque(slug){
  const p=rows.find(x=>x.slug===slug);if(!p||!p.published)return msg('Publique a hospedagem antes de preparar a placa.',true);
  const w=window.open('','_blank');if(!w)return msg('Permita pop-ups para abrir a arte da placa.',true);
- const q=qrUrl(slug,1200);
+ const q=qrUrl(slug,1200).replace('margin=30','margin=8');
  const html=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Guia da Casa • Plaquinhas</title><style>
  *{box-sizing:border-box}body{margin:0;background:#e8e8e8;font-family:Arial,Helvetica,sans-serif}.tools{padding:15px;background:white;text-align:center}.tools button{background:#153c32;color:white;border:0;border-radius:9px;padding:12px;margin:5px;font-weight:bold;cursor:pointer}.tools p{font-size:13px;color:#444}.stage{padding:18px;display:flex;justify-content:center}.plaque{position:relative;width:150mm;height:210mm;background:#030303;color:white;border:2.5mm solid #ffdc00;border-radius:7mm;display:flex;flex-direction:column;align-items:center;text-align:center;padding:6mm 5mm 6mm;overflow:hidden;gap:0}.plaque:before{content:"";position:absolute;inset:2mm;border:.45mm solid #ffdc00;border-radius:4mm;pointer-events:none}.house{width:72mm;height:43mm;color:#ffdf00;flex:none}.heading{font-weight:900;font-size:32pt;line-height:1.08;letter-spacing:-1.2px;white-space:nowrap;margin:0 0 1mm}.sub{font-size:14pt;line-height:1.18;font-weight:750;margin:0 0 5mm}.qrwrap{position:relative;width:96mm;height:96mm;display:flex;align-items:center;justify-content:center;flex:none}.qrframe{width:88mm;height:88mm;background:#fff;border:1.5mm solid #ffdc00;border-radius:5mm;padding:2.8mm;display:flex;align-items:center;justify-content:center}.qrframe img{width:100%;height:100%;object-fit:contain}.corners{position:absolute;inset:0;pointer-events:none;background:linear-gradient(#ffdc00,#ffdc00) left top/13mm 2.4mm no-repeat,linear-gradient(#ffdc00,#ffdc00) left top/2.4mm 13mm no-repeat,linear-gradient(#ffdc00,#ffdc00) right top/13mm 2.4mm no-repeat,linear-gradient(#ffdc00,#ffdc00) right top/2.4mm 13mm no-repeat,linear-gradient(#ffdc00,#ffdc00) left bottom/13mm 2.4mm no-repeat,linear-gradient(#ffdc00,#ffdc00) left bottom/2.4mm 13mm no-repeat,linear-gradient(#ffdc00,#ffdc00) right bottom/13mm 2.4mm no-repeat,linear-gradient(#ffdc00,#ffdc00) right bottom/2.4mm 13mm no-repeat;border-radius:5mm}.cta{width:122mm;max-width:100%;background:#ffdc00;color:#050505;border-radius:30mm;padding:3mm 4mm;display:flex;align-items:center;justify-content:center;gap:3mm;margin:4mm 0 2mm;font-size:12pt;line-height:1.1;font-weight:900}.cta svg{width:11mm;height:13mm;flex:none}.features{margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);width:100%;align-items:end;padding-bottom:1mm}.features span{font-size:9pt;line-height:1.14;font-weight:800;min-width:0;padding:0 1mm;border-right:.45mm solid #ffdc00}.features span:last-child{border:0}.features svg{display:block;margin:0 auto 2mm;width:15mm;height:15mm;stroke:#ffdc00;fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.features span:first-child svg,.features span:last-child svg{stroke:white}.plaque.table{height:200mm;padding-top:4mm;padding-bottom:5mm}.plaque.table .house{height:37mm;width:66mm}.plaque.table .qrwrap{width:90mm;height:90mm}.plaque.table .qrframe{width:83mm;height:83mm}.plaque.table .sub{margin-bottom:3mm}.plaque.table .cta{margin:3mm 0 1mm}@page{size:150mm 210mm;margin:0}@media print{html,body{background:white!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.tools{display:none}.stage{padding:0;display:block}.plaque{border-radius:0}.plaque:before{border-radius:0}}@media screen and (max-width:650px){.stage{justify-content:flex-start;overflow:auto;padding:8px}.plaque{zoom:.65;flex:none}}
+/* Ajuste final: reservar espaço real para os ícones e ampliar o QR */
+.plaque{padding:5mm 5mm 6mm;gap:0;justify-content:flex-start}
+.house{width:65mm;height:30mm;flex-shrink:0}
+.heading{font-size:30pt;line-height:1.05;margin:0}
+.sub{font-size:13pt;line-height:1.15;margin:1mm 0 3mm;flex-shrink:0}
+.qrwrap{width:104mm;height:104mm;flex-shrink:0}
+.qrframe{width:97mm;height:97mm;padding:1.2mm;border-width:1mm}
+.cta{flex-shrink:0;margin:3mm 0 0;padding:2.5mm 3mm;font-size:11pt;min-height:15mm}
+.cta svg{height:10mm;width:9mm}
+.features{flex-shrink:0;height:25mm;margin-top:auto;align-items:center;padding:0 0 1mm}
+.features span{font-size:8.5pt;line-height:1.1}
+.features svg{height:12mm;width:12mm;margin-bottom:1mm}
+.plaque.table{padding:4mm 5mm 5mm}
+.plaque.table .house{height:26mm;width:60mm}
+.plaque.table .heading{font-size:29pt}
+.plaque.table .sub{font-size:12pt;margin:0 0 2mm}
+.plaque.table .qrwrap{width:101mm;height:101mm}
+.plaque.table .qrframe{width:95mm;height:95mm}
+.plaque.table .cta{margin:2mm 0 0}
+.plaque.table .features{height:24mm}
  </style><style id="pageSize"></style></head><body><div class="tools"><strong>Guia da Casa — arte oficial</strong><p id="measure">Parede • 15 × 21 cm • vertical</p><button id="wall">Parede 15 × 21 cm</button><button id="table">Mesa 15 × 20 cm</button><button id="print">Imprimir / Salvar PDF</button><a href="__QR__" target="_blank" rel="noopener">QR em PNG</a><p>Imprimir em 100%, sem margens, com cores de fundo. Teste o QR antes de produzir.</p></div><div class="stage"><div class="plaque wall" id="plaque">
  <svg class="house" viewBox="0 0 180 110" aria-label="Logo Guia da Casa"><path fill="currentColor" d="M13 68 91 7l77 61h-23L91 26 36 68zM135 18h21v28l-21-17zM76 58h13v13H76zm17 0h13v13H93zM76 75h13v13H76zm17 0h13v13H93zM7 95c52-32 104 18 166-13-43 42-105 13-166 13z"/></svg>
  <div class="heading">Guia da Casa</div><div class="sub">Tudo o que você precisa<br>para uma ótima estadia.</div>
